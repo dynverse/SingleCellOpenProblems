@@ -1,10 +1,10 @@
 # openproblems Docker image
 
-Base image: rackspacedot/python37
+Base image: [python:3.8-buster](https://hub.docker.com/_/python)
 
-OS: Debian Stretch
+OS: Debian Buster
 
-Python: 3.7
+Python: 3.8
 
 Python packages:
 

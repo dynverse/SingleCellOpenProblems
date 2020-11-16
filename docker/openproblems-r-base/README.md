@@ -1,31 +1,32 @@
 # openproblems-r-base Docker image
 
-Base image: singlecellopenproblems/openproblems
+Base image: [singlecellopenproblems/openproblems](../openproblems)
 
-OS: Debian Stretch
+OS: Debian Buster
 
-Python: 3.7
+Python: 3.8
 
-R: 3.6
+R: 4.0
 
 apt packages:
 
-* dirmngr
-* ca-certificates
-* gnupg
-* gpgv
-* gfortran
-* libblas-dev
-* liblapack-dev
-* r-base-core=3.6
+* [R dependencies](https://github.com/rocker-org/rocker-versioned2/blob/master/scripts/install_R.sh)
+* [Rstudio dependencies](https://github.com/rocker-org/rocker-versioned2/blob/master/scripts/install_rstudio.sh)
+* [tidyverse dependencies](https://github.com/rocker-org/rocker-versioned2/blob/master/scripts/install_tidyverse.sh)
 
 R packages:
 
+* tidyverse
 * BiocManager
 * scran
 
 Python packages:
 
+* pip
+* wheel
+* setuptools
+* cmake
+* openproblems
 * rpy2
 * scIB
 * anndata2ri

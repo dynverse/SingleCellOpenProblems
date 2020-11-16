@@ -30,3 +30,6 @@ RUN Rscript -e 'remotes::install_cran("BiocManager")'
 RUN Rscript -e 'BiocManager::install(version="3.12", update=TRUE, ask=FALSE)'
 
 RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment", "scran"))'
+
+## PART 5: Install Python packages
+RUN pip install --no-cache-dir -U 'git+https://github.com/theislab/scib@master' 'rpy2' 'anndata2ri>=1.0.4'
