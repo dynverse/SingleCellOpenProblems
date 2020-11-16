@@ -1,4 +1,4 @@
-FROM rackspacedot/python37:latest
+FROM python:3.8-buster
 
 ENV DEBIAN_FRONTEND=noninteractive
 

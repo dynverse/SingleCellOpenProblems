@@ -1,19 +1,32 @@
 FROM singlecellopenproblems/openproblems:latest
 
-# Install R
-RUN apt-get update -qq
-RUN apt-get -yq --no-install-suggests --no-install-recommends install dirmngr ca-certificates gnupg gpgv gfortran libblas-dev liblapack-dev
-RUN apt-key adv --keyserver keys.gnupg.net --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'
-RUN echo 'deb http://cloud.r-project.org/bin/linux/debian stretch-cran35/' >> /etc/apt/sources.list
-RUN apt-get update -qq
-RUN apt-get install -yq --no-install-suggests --no-install-recommends r-base-core=3.6\*
-RUN apt-get clean -y && apt-get autoremove -y
+# PART 1: install scripts
+RUN cd / && \
+  wget https://github.com/rocker-org/rocker-versioned2/archive/master.zip && \
+  unzip master.zip && \
+  mv /rocker-versioned2-master/scripts /rocker_scripts && \
+  rm -r master.zip /rocker-versioned2-master
+  
+## PART 2: install R
+ENV BUILD_DATE=2020-11-12 \
+    R_VERSION=4.0.3 \
+    CRAN="https://cran.rstudio.com" \ 
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8 \
+    TERM=xterm \
+    R_HOME=/usr/local/lib/R \
+    TZ=Etc/UTC
+    
+RUN UBUNTU_VERSION=bionic /rocker_scripts/install_R.sh
 
-# Install R packages
-COPY ./docker/openproblems-r-base/r_requirements.txt ./r_requirements.txt
-RUN R -e "install.packages('BiocManager')"
-RUN for pkg in $(cat r_requirements.txt); do R -e "BiocManager::install('${pkg}')" 2>&1 > /dev/null | grep -v "^\*\*"; done
+## PART 3: install tidyverse
+RUN /rocker_scripts/install_rstudio.sh
+RUN /rocker_scripts/install_pandoc.sh
+RUN /rocker_scripts/install_tidyverse.sh
 
-# Install Python packages
-COPY . /usr/src/singlecellopenproblems
-RUN pip install -e /usr/src/singlecellopenproblems[r]
+## PART 4: install Bioc dependencies
+RUN Rscript -e 'remotes::install_cran("BiocManager")'
+
+RUN Rscript -e 'BiocManager::install(version="3.12", update=TRUE, ask=FALSE)'
+
+RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment", "scran"))'
