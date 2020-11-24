@@ -16,7 +16,7 @@ Our base R image. Do not add dependencies unless you know what you are doing.
 
 ### openproblems-r-extras
 
-Our R image that accepts additional dependencies. To add R packages (CRAN or Bioc), add them to `r_requirements.txt`. To add Python packages (PyPi or Github), add them to `requirements.txt`. Adding other R dependencies requires changing the Dockerfile, but only do this if you know what you are doing.
+Our R image that accepts additional dependencies. To add R packages (CRAN or Bioc), add them to `r_requirements.txt`. To add Python packages (PyPi or Github), add them to `requirements.txt`.
 
 ### openproblems-python-extras
 

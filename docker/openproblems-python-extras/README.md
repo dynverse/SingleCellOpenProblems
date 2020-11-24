@@ -1,16 +1,11 @@
 # openproblems-python-extras Docker image
 
-Base image: [singlecellopenproblems/openproblems](../openproblems)
+Base image: singlecellopenproblems/openproblems
 
-OS: Debian Buster
+OS: Debian Stretch
 
-Python: 3.8
+Python: 3.7
 
 Python packages:
 
-* pip
-* wheel
-* setuptools
-* cmake
-* openproblems
 * harmonic-alignment
